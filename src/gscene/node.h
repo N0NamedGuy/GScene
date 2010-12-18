@@ -23,8 +23,9 @@
 using namespace std;
 
 class Node {
-private:
+protected:
     list<Node*> children;
+    void _render();
 
 public:
     float fillColor[4];
@@ -33,6 +34,7 @@ public:
     float translation[3];
     float rotation[3];
     float scale[3];
+    bool wireframe;
 
     Node();
     void setColor(float r, float g, float b);
@@ -49,7 +51,7 @@ public:
     void setScale(float x, float y, float z);
 
     void addChild(Node* n);
-    void render();
+    virtual void render();
 }
 
 #endif

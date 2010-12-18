@@ -24,6 +24,10 @@ using namespace std;
 
 Node::Node() {
     setColor(1.0f,1.0f,1.0f);
+    setTranslation(0.0f, 0.0f, 0.0f);
+    setRotation(0.0f, 0.0f, 0.0f);
+    setScale(1.0f, 1.0f, 1.0f);
+    wireframe = false;
 }
 
 void Node::setColor(float r, float g, float b) {
@@ -96,6 +100,10 @@ void Node::addChild(Node* n) {
 }
 
 void Node::render() {
+    _render();
+}
+
+void Node::_render() {
 
     glTranslatef((GLFloat)translation[0],
         (GLFloat)translation[1],
