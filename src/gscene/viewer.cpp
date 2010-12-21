@@ -21,12 +21,16 @@
 #include <string>
 using namespace std;
 
-Viewer::Viewer(Node* rootNode, int width, int height, string title) {
-    this->rootNode = rootNode;
-    this->width = width;
-    this->height = height;
+void update();
+void reshape(int w, int h);
 
-    glutInit(0, NULL);
+Node* rootNode;
+int win;
+
+void viewer_init(int argc, char** argv,
+    int width, int height) {
+    
+    glutInit(&argc, argv);
     glutInitWindowSize(width, height);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
@@ -34,24 +38,24 @@ Viewer::Viewer(Node* rootNode, int width, int height, string title) {
     glutReshapeFunc(reshape);
     glutIdleFunc(update);
 
-    win = glutCreateWindow(title.c_str());
-    glutSetWindow(win);
-    glutShowWindow(win);
-    glutSetCursor(GLUT_CURSOR_NONE);
-
-    init();
-    glutMainLoop();
-}
-
-Viewer::~Viewer() {
-    glutDestroyWindow(win);
-}
-
-void Viewer::init() {
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Viewer::reshape(int w, int h) {
+void viewer_destroy() {
+    glutDestroyWindow(win);
+}
+
+void viewer_start(Node* node, const char* title) {
+    win = glutCreateWindow(title);
+    glutSetWindow(win);
+    glutShowWindow();
+    glutSetCursor(GLUT_CURSOR_NONE);
+
+    rootNode = node;
+    glutMainLoop();
+}
+
+void reshape(int w, int h) {
     if (h == 0) h = 1;
     
     float ratio = 1.0 * w / h;
@@ -70,7 +74,7 @@ void Viewer::reshape(int w, int h) {
 
 }
 
-void Viewer::update() {
+void update() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     rootNode->render();
     glutSwapBuffers();

@@ -52,6 +52,6 @@ public:
 
     void addChild(Node* n);
     virtual void render();
-}
+};
 
 #endif

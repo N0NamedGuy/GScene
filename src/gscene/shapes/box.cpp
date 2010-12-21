@@ -18,22 +18,22 @@
 
 #include <GL/glut.h>
 
-Box::Box() : Node();
+Box::Box() : Node() {};
 
 void Box::render() {
     _render();
    
     if (!wireframe) {
-        glColor4f((GLFloat)fillColor[0],
-            (GLFloat)fillColor[1],
-            (GLFloat)fillColor[2],
-            (GLFloat)fillColor[3]);
+        glColor4f((GLfloat)fillColor[0],
+            (GLfloat)fillColor[1],
+            (GLfloat)fillColor[2],
+            (GLfloat)fillColor[3]);
         glutSolidCube(1.0f); 
     }
    
-    glColor4f((GLFloat)lineColor[0],
-        (GLFloat)lineColor[1],
-        (GLFloat)lineColor[2],
-        (GLFloat)lineColor[3]);
+    glColor4f((GLfloat)lineColor[0],
+        (GLfloat)lineColor[1],
+        (GLfloat)lineColor[2],
+        (GLfloat)lineColor[3]);
     glutWireCube(1.0f);
 }

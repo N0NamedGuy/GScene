@@ -24,6 +24,6 @@ class Box : public Node {
 public:
     Box();
     virtual void render();
-}
+};
 
 #endif

@@ -24,20 +24,8 @@
 
 using namespace std;
 
-class Viewer {
-protected:
-    int width;
-    int height;
-    int win
-    Node* rootNode;
-
-    void init();
-    void reshape();
-    void update();
-
-public:
-    Viewer(Node* rootNode, int width. int height, string title);
-    ~Viewer();
-}
+void viewer_init(int argc, char** argv, int width, int height);
+void viewer_destroy();
+void viewer_start(Node* node, const char* title);
 
 #endif

@@ -31,7 +31,7 @@ Node::Node() {
 }
 
 void Node::setColor(float r, float g, float b) {
-    setColor(r, g, b, 1.0);
+    setColor(r, g, b, 1.0f);
 }
 
 void Node::setColor(float r, float g, float b, float a) {
@@ -40,7 +40,7 @@ void Node::setColor(float r, float g, float b, float a) {
 }
 
 void Node::setFillColor(float r, float g, float b) {
-    setFillColor(r, g, b, 1.0);
+    setFillColor(r, g, b, 1.0f);
 }
 
 void Node::setFillColor(float r, float g, float b, float a) {
@@ -54,7 +54,7 @@ void Node::setFillColor(float r, float g, float b, float a) {
         iter != children.end();
         iter++) {
        
-        *iter->setFillColor(r, g, b, a);
+        (*iter)->setFillColor(r, g, b, a);
     }
 }
 
@@ -73,7 +73,7 @@ void Node::setLineColor(float r, float g, float b, float a) {
         iter != children.end();
         iter++) {
        
-        *iter->setLineColor(r, g, b, a);
+        (*(*iter)).setLineColor(r, g, b, a);
     }
 }
 
@@ -96,7 +96,7 @@ void Node::setScale(float x, float y, float z) {
 }
 
 void Node::addChild(Node* n) {
-    list.push_back(n);
+    children.push_back(n);
 }
 
 void Node::render() {
@@ -105,17 +105,17 @@ void Node::render() {
 
 void Node::_render() {
 
-    glTranslatef((GLFloat)translation[0],
-        (GLFloat)translation[1],
-        (GLFloat)translation[2]);
+    glTranslatef((GLfloat)translation[0],
+        (GLfloat)translation[1],
+        (GLfloat)translation[2]);
     
-    glRotatef((GLFloat)rotation[0], (GLFloat)1.0f, (GLFloat)0.0f, (GLFloat)0.0f);
-    glRotatef((GLFloat)rotation[1], (GLFloat)0.0f, (GLFloat)1.0f, (GLFloat)0.0f);
-    glRotatef((GLFloat)rotation[2], (GLFloat)0.0f, (GLFloat)0.0f, (GLFloat)1.0f);
+    glRotatef((GLfloat)rotation[0], (GLfloat)1.0f, (GLfloat)0.0f, (GLfloat)0.0f);
+    glRotatef((GLfloat)rotation[1], (GLfloat)0.0f, (GLfloat)1.0f, (GLfloat)0.0f);
+    glRotatef((GLfloat)rotation[2], (GLfloat)0.0f, (GLfloat)0.0f, (GLfloat)1.0f);
     
-    glScalef((GLFloat)scale[0],
-        (GLFloat)scale[1],
-        (GLFloat)scale[2]);
+    glScalef((GLfloat)scale[0],
+        (GLfloat)scale[1],
+        (GLfloat)scale[2]);
 
     list<Node*>::iterator iter;
     for (iter = children.begin(); 
@@ -123,7 +123,7 @@ void Node::_render() {
         iter++) {
        
         glPushMatrix(); 
-        *iter->render();
+        (*(*iter)).render();
         glPopMatrix();
     }
 
