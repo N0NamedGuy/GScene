@@ -24,11 +24,11 @@ using namespace std;
 void update();
 void reshape(int w, int h);
 
-Node* rootNode;
+Node* __rootNode;
 int win;
 
 void viewer_init(int argc, char** argv,
-    int width, int height) {
+    int width, int height, const char* title) {
     
     glutInit(&argc, argv);
     glutInitWindowSize(width, height);
@@ -38,20 +38,21 @@ void viewer_init(int argc, char** argv,
     glutReshapeFunc(reshape);
     glutIdleFunc(update);
 
-	glEnable(GL_DEPTH_TEST);
+    win = glutCreateWindow(title);
+    glutSetWindow(win);
+    glutShowWindow();
+    glutSetCursor(GLUT_CURSOR_NONE);
+	
+    glEnable(GL_DEPTH_TEST);
 }
 
 void viewer_destroy() {
     glutDestroyWindow(win);
 }
 
-void viewer_start(Node* node, const char* title) {
-    win = glutCreateWindow(title);
-    glutSetWindow(win);
-    glutShowWindow();
-    glutSetCursor(GLUT_CURSOR_NONE);
+void viewer_start(Node* node) {
 
-    rootNode = node;
+    __rootNode = node;
     glutMainLoop();
 }
 
@@ -68,14 +69,15 @@ void reshape(int w, int h) {
     gluPerspective(45,ratio,1,1000);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0.0,0.0,5.0, 
-            0.0,0.0,-1.0,
-            0.0f,1.0f,0.0f);
 
 }
 
 void update() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    rootNode->render();
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    __rootNode->render();
     glutSwapBuffers();
 }

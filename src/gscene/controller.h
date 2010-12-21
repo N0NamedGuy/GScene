@@ -15,17 +15,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIEWER_H
-#define VIEWER_H
-#define VIEWER_FPS 60
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
-#include "node.h"
-#include <string>
+#include <GL/glut.h>
 
-using namespace std;
+typedef void(*control_func)(unsigned char key, bool keydown);
 
-void viewer_init(int argc, char** argv, int width, int height, const char* title);
-void viewer_destroy();
-void viewer_start(Node* node);
+void controller_set_hook(const char* keys, control_func func);
+void controller_start();
 
 #endif

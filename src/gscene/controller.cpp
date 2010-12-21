@@ -15,17 +15,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIEWER_H
-#define VIEWER_H
-#define VIEWER_FPS 60
-
-#include "node.h"
-#include <string>
+#include "controller.h"
+#include <GL/glut.h>
+#include <map>
 
 using namespace std;
+map<unsigned char, control_func> hooks;
 
-void viewer_init(int argc, char** argv, int width, int height, const char* title);
-void viewer_destroy();
-void viewer_start(Node* node);
+void controller_keydown(unsigned char key, int x, int y) {
+    hooks[key](key, true);    
+}
 
-#endif
+void controller_keyup(unsigned char key, int x, int y) {
+    hooks[key](key, false);    
+}
+
+void controller_set_hook(const char* keys, control_func func) {
+    char key;
+    int i = 0;
+
+    while (key = keys[i++]) {
+        hooks[key] = func;
+    }
+}
+
+void controller_start() {
+    glutKeyboardFunc(controller_keydown);
+    glutKeyboardUpFunc(controller_keyup);
+}
